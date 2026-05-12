@@ -60,6 +60,9 @@ const CreatePost = () => {
       } else {
         const response = await postsAPI.createPost(payload);
         const newId = response.data.post?._id || response.data._id;
+        if (formData.publish && newId) {
+          await postsAPI.publishPost(newId);
+        }
         navigate(formData.publish ? `/posts/${newId}` : '/profile');
       }
     } catch (error) {
